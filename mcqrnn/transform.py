@@ -18,12 +18,13 @@ def _mcqrnn_transform(
     """
     _len_taus = len(taus)
     _len_x = len(x)
+    _len_data = _len_x * _len_taus
+
     x_trans = np.repeat(x, _len_taus, axis=0).astype("float32")
-    taus_trans = (
-        np.tile(taus, _len_x).reshape((_len_x * _len_taus, 1)).astype("float32")
-    )
+    taus_trans = np.tile(taus, _len_x).reshape((_len_data, 1)).astype("float32")
     if y is not None:
         y_trans = np.repeat(y, _len_taus, axis=0).astype("float32")
+        y_trans = y_trans.reshape((_len_data, 1))
         return x_trans, y_trans, taus_trans
     else:
         return x_trans, taus_trans
