@@ -30,11 +30,25 @@ def _mcqrnn_transform(
 
 
 class DataTransformer:
+    """
+    A class to transform data into trainable form.
+    Args:
+        x (np.ndarray): input
+        taus (np.ndarray): quantiles
+        y (Union[np.ndarray, None]): output
+
+    Methods:
+        __call__:
+            Return Tuple[np.ndarray, ...]:
+        transform(input_taus: np.ndarray):
+            Return transformed x with given input_taus
+    """
+
     def __init__(
         self,
         x: np.ndarray,
         taus: np.ndarray,
-        y: Union[np.ndarray, None],
+        y: Union[np.ndarray, None] = None,
     ):
         self.x = x
         self.y = y
