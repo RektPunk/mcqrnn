@@ -5,8 +5,8 @@ import numpy as np
 
 def tilted_absolute_loss(
     y_true: Union[np.ndarray, tf.Tensor],
-    y_pred: Union[np.ndarray, tf.Tensor], 
-    tau: Union[np.ndarray, tf.Tensor]
+    y_pred: Union[np.ndarray, tf.Tensor],
+    tau: Union[np.ndarray, tf.Tensor],
 ) -> tf.Tensor:
     """
     Tilted absolute loss function or check loss
