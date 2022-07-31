@@ -1,0 +1,28 @@
+import numpy as np
+from mcqrnn.transform import DataTransformer
+from mcqrnn.models import Mcqrnn
+from mcqrnn.generate_example_dataset import generate_example
+
+
+test_taus = np.array([i / 10 for i in range(1, 10)])
+
+
+def test_Mcqrnn():
+    x_train, y_train = generate_example(10)
+    mcqrnn_module = Mcqrnn(
+        input_features=3,
+        dense_features=3,
+    )
+
+    data_transformer = DataTransformer(
+        x=x_train,
+        y=y_train,
+        taus=test_taus,
+    )
+
+    tests = []
+    for test_tau in test_taus:
+        x_tmp, tau_tmp = data_transformer.transform(np.array([test_tau]))
+        tests.append(mcqrnn_module(x_tmp, tau_tmp))
+
+    assert np.all(np.diff(np.concatenate(tests, axis=1)) > 0)

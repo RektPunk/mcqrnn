@@ -14,17 +14,19 @@ def _sincx(x: np.ndarray) -> np.ndarray:
     return np.sin(_x_pi) / _x_pi
 
 
-def generate_dataset(n_samples: int) -> Tuple[float]:
+def generate_example(
+    n_samples: int,
+) -> Tuple[np.ndarray, np.ndarray]:
     """
     Generate dataset
     Args:
         x (int): number of samples
     Returns:
-        Tuple[float]: X, y
+        Tuple[float32]: x, y
     """
     samples = np.random.uniform(low=-1, high=1, size=n_samples)
     reshaped_samples = np.reshape(samples, newshape=(n_samples, 1))
     sincx_samples = _sincx(samples)
     eps = np.random.normal(loc=0, scale=0.1 * np.exp(1 - samples))
     target = sincx_samples + eps
-    return reshaped_samples, target
+    return reshaped_samples.astype("float32"), target.astype("float32")
