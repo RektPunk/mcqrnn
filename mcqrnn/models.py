@@ -109,13 +109,14 @@ class Mcqrnn(tf.Module):
         __call__:
             Return dense layer with input activation and features
     """
+
     def __init__(
         self,
         input_features: int,
         dense_features: int,
         activation: Callable = tf.nn.relu,
         name: Union[str, None] = None,
-    ): 
+    ):
         super().__init__(name=name)
         self.input_features = input_features
         self.dense_features = dense_features
