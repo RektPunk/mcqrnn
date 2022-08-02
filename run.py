@@ -2,7 +2,7 @@ import tensorflow as tf
 import numpy as np
 from mcqrnn import (
     generate_example,
-    tilted_absolute_loss,
+    TiltedAbsoluteLoss,
     Mcqrnn,
     DataTransformer,
 )
@@ -26,8 +26,8 @@ mcqrnn_module = Mcqrnn(
 
 y_hat = mcqrnn_module(inputs=x_train_transform, tau=taus_transform)
 
+tilted_absolute_loss = TiltedAbsoluteLoss(tau = taus_transform)
 loss = tilted_absolute_loss(
-    y_true=y_train_transform,
-    y_pred=y_hat,
-    tau=taus_transform,
+    y_train_transform,
+    y_hat,
 )
