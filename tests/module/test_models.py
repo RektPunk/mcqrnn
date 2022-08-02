@@ -10,7 +10,7 @@ test_taus = np.array([i / 10 for i in range(1, 10)])
 def test_Mcqrnn():
     x_train, y_train = generate_example(10)
     mcqrnn_module = Mcqrnn(
-        input_features=3,
+        out_features=3,
         dense_features=3,
     )
 
