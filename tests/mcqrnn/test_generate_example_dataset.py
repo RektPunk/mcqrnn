@@ -1,5 +1,4 @@
 import numpy as np
-import pytest
 from mcqrnn.generate_example_dataset import _sincx, generate_example
 
 
