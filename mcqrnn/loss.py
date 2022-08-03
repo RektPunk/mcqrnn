@@ -13,18 +13,15 @@ class TiltedAbsoluteLoss(tf.keras.losses.Loss):
     Return:
         tf.Tensor: tilted absolute loss
     """
-    def __init__(
-        self, 
-        tau: Union[np.ndarray, tf.Tensor],
-        **kwargs
-    ):
+
+    def __init__(self, tau: Union[np.ndarray, tf.Tensor], **kwargs):
         super(TiltedAbsoluteLoss, self).__init__(**kwargs)
         self._one = tf.cast(1, dtype=tau.dtype)
         self._tau = tf.cast(tau, dtype=tau.dtype)
 
     def call(
-        self, 
-        y_true: Union[np.ndarray, tf.Tensor], 
+        self,
+        y_true: Union[np.ndarray, tf.Tensor],
         y_pred: Union[np.ndarray, tf.Tensor],
     ) -> tf.Tensor:
         error = y_true - y_pred
