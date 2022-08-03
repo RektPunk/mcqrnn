@@ -6,7 +6,7 @@ from mcqrnn.loss import TiltedAbsoluteLoss
 
 @tf.function
 def train_step(
-    model: Mcqrnn, 
+    model: Mcqrnn,
     inputs: np.ndarray,
     output: np.ndarray,
     tau: np.ndarray,
