@@ -1,7 +1,7 @@
 import tensorflow as tf
 import numpy as np
+from mcqrnn import generate_example, train_step
 from mcqrnn import (
-    generate_example,
     TiltedAbsoluteLoss,
     Mcqrnn,
     DataTransformer,
@@ -19,15 +19,30 @@ data_transformer = DataTransformer(
 x_train_transform, y_train_transform, taus_transform = data_transformer()
 
 mcqrnn_module = Mcqrnn(
-    out_features=3,
-    dense_features=3,
-    activation=tf.nn.relu,
+    out_features=10,
+    dense_features=10,
+    activation=tf.nn.sigmoid,
 )
 
-y_hat = mcqrnn_module(inputs=x_train_transform, tau=taus_transform)
-
 tilted_absolute_loss = TiltedAbsoluteLoss(tau = taus_transform)
-loss = tilted_absolute_loss(
-    y_train_transform,
-    y_hat,
+optimizer = tf.keras.optimizers.Adam(learning_rate = 0.005)
+
+EPOCHS = 1000
+
+for epoch in range(EPOCHS):
+    train_loss = train_step(
+        model = mcqrnn_module, 
+        inputs = x_train_transform, 
+        output = y_train_transform,
+        tau = taus_transform, 
+        loss_func = tilted_absolute_loss,
+        optimizer = optimizer,
+    )
+    if epoch % 100 == 0:
+        print(epoch, train_loss)
+
+
+mcqrnn_module(
+    inputs = x_train_transform,
+    tau = taus_transform,
 )
