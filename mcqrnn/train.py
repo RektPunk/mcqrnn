@@ -1,16 +1,14 @@
 import numpy as np
 import tensorflow as tf
-from mcqrnn.models import Mcqrnn
-from mcqrnn.loss import TiltedAbsoluteLoss
 
 
 @tf.function
 def train_step(
-    model: Mcqrnn,
+    model: tf.keras.Model,
     inputs: np.ndarray,
     output: np.ndarray,
     tau: np.ndarray,
-    loss_func: TiltedAbsoluteLoss,
+    loss_func: tf.keras.losses.Loss,
     optimizer: tf.keras.optimizers,
 ):
     with tf.GradientTape(persistent=True) as tape:
