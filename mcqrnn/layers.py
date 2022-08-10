@@ -1,4 +1,4 @@
-from typing import Callable, Union
+from typing import Callable
 import numpy as np
 import tensorflow as tf
 
@@ -51,7 +51,6 @@ class McqrnnDense(tf.keras.layers.Layer):
     Args:
         dense_features (int): the number of nodes in hidden layer
         activation (Callable): activation function e.g. tf.nn.relu or tf.nn.sigmoid
-        name (Union[str, None]): name of Module
     Methods:
         build:
             Set weight shape for first call
