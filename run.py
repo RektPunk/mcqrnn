@@ -19,21 +19,13 @@ x_train, y_train = generate_example(N_SAMPLES)
 taus = np.array(TAUS)
 
 
-optimizer = tf.keras.optimizers.Adam(learning_rate=LEARNING_RATE)
-data_transformer = DataTransformer(
-    x=x_train,
-    taus=taus,
-    y=y_train,
-)
-
+data_transformer = DataTransformer(x=x_train, taus=taus, y=y_train,)
 x_train_transform, y_train_transform, taus_transform = data_transformer()
 
 mcqrnn_module = Mcqrnn(
-    out_features=OUT_FEATURES,
-    dense_features=DENSE_FEATURES,
-    activation=tf.nn.sigmoid,
+    out_features=OUT_FEATURES, dense_features=DENSE_FEATURES, activation=tf.nn.sigmoid,
 )
-
+optimizer = tf.keras.optimizers.Adam(learning_rate=LEARNING_RATE)
 tilted_absolute_loss = TiltedAbsoluteLoss(tau=taus_transform)
 for epoch in range(EPOCHS):
     train_loss = train_step(
@@ -47,7 +39,4 @@ for epoch in range(EPOCHS):
     if epoch % 100 == 0:
         print(epoch, train_loss)
 
-y_predicted = mcqrnn_module(
-    inputs=x_train_transform,
-    tau=taus_transform,
-)
+y_predicted = mcqrnn_module(inputs=x_train_transform, tau=taus_transform,)

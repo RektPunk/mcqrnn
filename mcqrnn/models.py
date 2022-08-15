@@ -34,15 +34,13 @@ class Mcqrnn(tf.keras.Model):
             activation=activation,
         )
         self.dense = McqrnnDense(
-            dense_features=dense_features,
+            dense_features=dense_features, 
             activation=activation,
         )
         self.output_dense = McqrnnOutputDense()
 
     def call(
-        self,
-        inputs: np.ndarray,
-        tau: np.ndarray,
+        self, inputs: np.ndarray, tau: np.ndarray,
     ):
         x = self.input_dense(inputs, tau)
         x = self.dense(x)

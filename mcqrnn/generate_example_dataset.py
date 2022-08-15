@@ -14,9 +14,7 @@ def _sincx(x: np.ndarray) -> np.ndarray:
     return np.sin(_x_pi) / _x_pi
 
 
-def generate_example(
-    n_samples: int,
-) -> Tuple[np.ndarray, np.ndarray]:
+def generate_example(n_samples: int,) -> Tuple[np.ndarray, np.ndarray]:
     """
     Generate dataset
     Args:
