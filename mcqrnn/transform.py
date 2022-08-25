@@ -3,7 +3,9 @@ import numpy as np
 
 
 def _mcqrnn_transform(
-    x: np.ndarray, taus: np.ndarray, y: Union[np.ndarray, None] = None,
+    x: np.ndarray,
+    taus: np.ndarray,
+    y: Union[np.ndarray, None] = None,
 ) -> Tuple[np.ndarray, ...]:
     """
     Transform x, y, taus into the trainable form
@@ -44,7 +46,10 @@ class DataTransformer:
     """
 
     def __init__(
-        self, x: np.ndarray, taus: np.ndarray, y: Union[np.ndarray, None] = None,
+        self,
+        x: np.ndarray,
+        taus: np.ndarray,
+        y: Union[np.ndarray, None] = None,
     ):
         self.x = x
         self.y = y
@@ -58,4 +63,7 @@ class DataTransformer:
 
     def transform(self, input_taus: np.ndarray) -> np.ndarray:
         input_taus = input_taus.astype("float32")
-        return _mcqrnn_transform(x=self.x, taus=input_taus,)
+        return _mcqrnn_transform(
+            x=self.x,
+            taus=input_taus,
+        )

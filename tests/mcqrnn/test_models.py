@@ -9,8 +9,15 @@ test_taus = np.array([i / 10 for i in range(1, 10)])
 
 def test_Mcqrnn():
     x_train, y_train = generate_example(10)
-    data_transformer = DataTransformer(x=x_train, y=y_train, taus=test_taus,)
-    mcqrnn_module = Mcqrnn(out_features=3, dense_features=3,)
+    data_transformer = DataTransformer(
+        x=x_train,
+        y=y_train,
+        taus=test_taus,
+    )
+    mcqrnn_module = Mcqrnn(
+        out_features=3,
+        dense_features=3,
+    )
 
     tests = []
     for test_tau in test_taus:

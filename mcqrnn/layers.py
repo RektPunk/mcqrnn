@@ -17,8 +17,9 @@ class McqrnnInputDense(tf.keras.layers.Layer):
     """
 
     def __init__(
-        self, out_features: int, 
-        activation: Callable, 
+        self,
+        out_features: int,
+        activation: Callable,
         **kwargs,
     ):
         super(McqrnnInputDense, self).__init__(**kwargs)
@@ -26,7 +27,8 @@ class McqrnnInputDense(tf.keras.layers.Layer):
         self.activation = activation
 
     def build(
-        self, input_shape,
+        self,
+        input_shape,
     ):
         self.w_inputs = tf.Variable(
             tf.random.normal([input_shape[-1], self.out_features]), name="w_inputs"
@@ -57,14 +59,18 @@ class McqrnnDense(tf.keras.layers.Layer):
     """
 
     def __init__(
-        self, dense_features: int, activation: Callable, **kwargs,
+        self,
+        dense_features: int,
+        activation: Callable,
+        **kwargs,
     ):
         super(McqrnnDense, self).__init__(**kwargs)
         self.dense_features = dense_features
         self.activation = activation
 
     def build(
-        self, input_shape,
+        self,
+        input_shape,
     ):
         self.w = tf.Variable(
             tf.random.normal([input_shape[-1], self.dense_features]), name="w"
@@ -72,7 +78,8 @@ class McqrnnDense(tf.keras.layers.Layer):
         self.b = tf.Variable(tf.zeros([self.dense_features]), name="b")
 
     def call(
-        self, inputs: np.ndarray,
+        self,
+        inputs: np.ndarray,
     ):
         outputs = tf.matmul(inputs, tf.exp(self.w)) + self.b
         return self.activation(outputs)
@@ -89,18 +96,21 @@ class McqrnnOutputDense(tf.keras.layers.Layer):
     """
 
     def __init__(
-        self, **kwargs,
+        self,
+        **kwargs,
     ):
         super(McqrnnOutputDense, self).__init__(**kwargs)
 
     def build(
-        self, input_shape,
+        self,
+        input_shape,
     ):
         self.w = tf.Variable(tf.random.normal([input_shape[-1], 1]), name="w")
         self.b = tf.Variable(tf.zeros([1]), name="b")
 
     def call(
-        self, inputs: np.ndarray,
+        self,
+        inputs: np.ndarray,
     ):
         outputs = tf.matmul(inputs, tf.exp(self.w)) + self.b
         return outputs
