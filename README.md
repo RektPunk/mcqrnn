@@ -1,8 +1,4 @@
-# About
-
-I implement monotone composite quantile regression neural network (MCQRNN) with tensorflow 2.x. \
-Please leave bug report or request in [Issues](https://github.com/RektPunk/mcqrnn-tf2/issues).
-
+Monotone composite quantile regression neural network (MCQRNN) with tensorflow 2.x. \
 
 # Getting Started
 1. Clone the repo
