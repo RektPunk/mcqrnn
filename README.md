@@ -1,5 +1,5 @@
 # mcqrnn-tf2
-Monotone composite quantile regression neural network (MCQRNN) with tensorflow 2.x. \
+Monotone composite quantile regression neural network (MCQRNN) with tensorflow 2.x.
 
 ### Getting Started
 1. Clone the repo
