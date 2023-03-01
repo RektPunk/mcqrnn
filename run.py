@@ -26,7 +26,7 @@ data_transformer = DataTransformer(
 )
 x_train_transform, y_train_transform, taus_transform = data_transformer()
 
-mcqrnn_module = Mcqrnn(
+mcqrnn_regressor = Mcqrnn(
     out_features=OUT_FEATURES,
     dense_features=DENSE_FEATURES,
     activation=tf.nn.sigmoid,
@@ -35,7 +35,7 @@ optimizer = tf.keras.optimizers.Adam(learning_rate=LEARNING_RATE)
 tilted_absolute_loss = TiltedAbsoluteLoss(tau=taus_transform)
 for epoch in range(EPOCHS):
     train_loss = train_step(
-        model=mcqrnn_module,
+        model=mcqrnn_regressor,
         inputs=x_train_transform,
         output=y_train_transform,
         tau=taus_transform,
@@ -45,7 +45,7 @@ for epoch in range(EPOCHS):
     if epoch % 100 == 0:
         print(epoch, train_loss)
 
-y_predicted = mcqrnn_module(
+y_predicted = mcqrnn_regressor(
     inputs=x_train_transform,
     tau=taus_transform,
 )
