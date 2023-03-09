@@ -18,12 +18,12 @@ DENSE_FEATURES = 10
 x_train, y_train = generate_example(N_SAMPLES)
 x_test, y_test = generate_example(N_SAMPLES)
 taus = np.array(TAUS)
-train_data_transformer = DataTransformer(
+data_transformer = DataTransformer(
     x=x_train,
     taus=taus,
     y=y_train,
 )
-x_train_transform, y_train_transform, taus_transform = train_data_transformer()
+x_train_transform, y_train_transform, taus_transform = data_transformer()
 mcqrnn_regressor = Mcqrnn(
     out_features=OUT_FEATURES,
     dense_features=DENSE_FEATURES,
@@ -43,9 +43,7 @@ for epoch in range(EPOCHS):
     if epoch % 1000 == 0:
         print(epoch, train_loss)
 
-x_test_transform, taus_transform = train_data_transformer.transform(
-    x=x_test, input_taus=taus
-)
+x_test_transform, taus_transform = data_transformer.transform(x=x_test, input_taus=taus)
 y_test_predicted = mcqrnn_regressor(
     inputs=x_test_transform,
     tau=taus_transform,
