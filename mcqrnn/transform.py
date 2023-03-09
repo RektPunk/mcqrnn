@@ -61,9 +61,9 @@ class DataTransformer:
     def __call__(self) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         return self.x_trans, self.y_trans, self.tau_trans
 
-    def transform(self, input_taus: np.ndarray) -> np.ndarray:
+    def transform(self, x: np.ndarray, input_taus: np.ndarray) -> np.ndarray:
         input_taus = input_taus.astype("float32")
         return _mcqrnn_transform(
-            x=self.x,
+            x=x,
             taus=input_taus,
         )
