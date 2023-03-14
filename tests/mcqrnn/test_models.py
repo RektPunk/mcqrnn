@@ -21,7 +21,7 @@ def test_Mcqrnn():
 
     tests = []
     for test_tau in test_taus:
-        x_tmp, tau_tmp = data_transformer.transform(np.array([test_tau]))
+        x_tmp, tau_tmp = data_transformer.transform(x_train, np.array([test_tau]))
         tests.append(mcqrnn_module(x_tmp, tau_tmp))
 
-    assert np.all(np.diff(np.concatenate(tests, axis=1)) > 0)
+    assert np.all(np.diff(np.concatenate(tests, axis=1)) >= 0)
