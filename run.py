@@ -1,19 +1,21 @@
-import tensorflow as tf
 import numpy as np
-from mcqrnn import generate_example, train_step
+import tensorflow as tf
+
 from mcqrnn import (
-    TiltedAbsoluteLoss,
-    Mcqrnn,
     DataTransformer,
+    Mcqrnn,
+    TiltedAbsoluteLoss,
+    generate_example,
+    train_step,
 )
 
 # Examples setting
-EPOCHS = 2000
-LEARNING_RATE = 0.05
+EPOCHS = 5000
+LEARNING_RATE = 0.15
 TAUS = [0.3, 0.4, 0.5, 0.6, 0.7]
-N_SAMPLES = 500
-OUT_FEATURES = 10
-DENSE_FEATURES = 10
+N_SAMPLES = 1000
+OUT_FEATURES = 15
+DENSE_FEATURES = 15
 
 x_train, y_train = generate_example(N_SAMPLES)
 x_test, y_test = generate_example(N_SAMPLES)
@@ -48,4 +50,4 @@ y_test_predicted = mcqrnn_regressor(
     inputs=x_test_transform,
     tau=taus_transform,
 )
-y_test_predicted_reshaped = y_test_predicted.numpy().reshape(500, 5).T
+y_test_predicted_reshaped = y_test_predicted.numpy().reshape(N_SAMPLES, len(TAUS)).T
