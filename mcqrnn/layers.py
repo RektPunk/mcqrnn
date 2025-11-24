@@ -60,7 +60,7 @@ class McqrnnInputDense(tf.keras.layers.Layer):
             trainable=True,
         )
         self.b = self.add_weight(
-            shape=(self.out_features,), initializer="zeros", trainable=True
+            shape=(self.out_features,), initializer="random_normal", trainable=True
         )
 
     def call(self, inputs, tau):
@@ -102,7 +102,7 @@ class McqrnnDense(tf.keras.layers.Layer):
             trainable=True,
         )
         self.b = self.add_weight(
-            shape=(self.dense_features,), initializer="zeros", trainable=True
+            shape=(self.dense_features,), initializer="random_normal", trainable=True
         )
 
     def call(
@@ -139,7 +139,9 @@ class McqrnnOutputDense(tf.keras.layers.Layer):
             constraint=PositiveConstraint(),
             trainable=True,
         )
-        self.b = self.add_weight(shape=(1,), initializer="zeros", trainable=True)
+        self.b = self.add_weight(
+            shape=(1,), initializer="random_normal", trainable=True
+        )
 
     def call(
         self,
