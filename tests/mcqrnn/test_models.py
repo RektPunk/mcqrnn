@@ -1,8 +1,8 @@
 import numpy as np
-from mcqrnn.transform import DataTransformer
-from mcqrnn.models import Mcqrnn
-from mcqrnn.generate_example_dataset import generate_example
 
+from mcqrnn.data_transform import DataTransformer
+from mcqrnn.generate_example_dataset import generate_example
+from mcqrnn.models import Mcqrnn
 
 test_taus = np.array([i / 10 for i in range(1, 10)])
 
