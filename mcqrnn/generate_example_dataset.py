@@ -1,5 +1,4 @@
 import numpy as np
-from typing import Tuple
 
 
 def _sincx(x: np.ndarray) -> np.ndarray:
@@ -16,7 +15,7 @@ def _sincx(x: np.ndarray) -> np.ndarray:
 
 def generate_example(
     n_samples: int,
-) -> Tuple[np.ndarray, np.ndarray]:
+) -> tuple[np.ndarray, np.ndarray]:
     """
     Generate dataset
     Args:

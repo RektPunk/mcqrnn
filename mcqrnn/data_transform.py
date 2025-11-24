@@ -1,12 +1,11 @@
-from typing import Union, Tuple
 import numpy as np
 
 
-def _mcqrnn_transform(
+def _data_transform(
     x: np.ndarray,
     taus: np.ndarray,
-    y: Union[np.ndarray, None] = None,
-) -> Tuple[np.ndarray, ...]:
+    y: np.ndarray | None = None,
+) -> tuple[np.ndarray, ...]:
     """
     Transform x, y, taus into the trainable form
     Args:
@@ -14,7 +13,7 @@ def _mcqrnn_transform(
         y (np.ndarray): output
         taus (np.ndarray): quantiles
     Return
-        Tuple[np.ndarray]: transformed x, y
+        tuple[np.ndarray]: transformed x, y
     """
     _len_taus = len(taus)
     _len_x = len(x)
@@ -40,7 +39,7 @@ class DataTransformer:
 
     Methods:
         __call__:
-            Return Tuple[np.ndarray, ...]:
+            Return tuple[np.ndarray, ...]:
         transform(input_taus: np.ndarray):
             Return transformed x with given input_taus
     """
@@ -49,21 +48,21 @@ class DataTransformer:
         self,
         x: np.ndarray,
         taus: np.ndarray,
-        y: Union[np.ndarray, None] = None,
+        y: np.ndarray | None = None,
     ):
         self.x = x
         self.y = y
         self.taus = taus
-        self.x_trans, self.y_trans, self.tau_trans = _mcqrnn_transform(
+        self.x_trans, self.y_trans, self.tau_trans = _data_transform(
             x=self.x, y=self.y, taus=self.taus
         )
 
-    def __call__(self) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    def __call__(self) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
         return self.x_trans, self.y_trans, self.tau_trans
 
     def transform(self, x: np.ndarray, input_taus: np.ndarray) -> np.ndarray:
         input_taus = input_taus.astype("float32")
-        return _mcqrnn_transform(
+        return _data_transform(
             x=x,
             taus=input_taus,
         )
