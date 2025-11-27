@@ -8,7 +8,7 @@ git clone https://github.com/RektPunk/mcqrnn.git
 ```
 
 2. Install requirements
-   
+
 You have two options for installing the necessary Python packages:
 - Using pip (Standard)
 ```
