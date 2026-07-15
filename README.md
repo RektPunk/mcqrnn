@@ -1,4 +1,6 @@
-# MCQRNN
+<div style="text-align: center;">
+  <img src="https://capsule-render.vercel.app/api?type=transparent&fontColor=0047AB&text=MCQRNN&height=120&fontSize=90">
+</div>
 
 Monotone Composite Quantile Regression Neural Network (MCQRNN) implemented in both TensorFlow and PyTorch.
 
