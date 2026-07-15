@@ -1,10 +1,11 @@
 [project]
 name = "mcqrnn"
 version = "0.1.0"
-description = "Add your description here"
+description = "Monotone composite quantile regression neural network (MCQRNN) with tensorflow and torch"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.12,<3.14"
 dependencies = [
+    "matplotlib>=3.11.0",
     "numpy>=2.3.5",
     "pandas>=2.3.3",
     "pre-commit>=4.5.0",
