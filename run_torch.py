@@ -1,13 +1,13 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import tensorflow as tf
+import torch
 
-from mcqrnn.tensorflow import MCQRNNRegressor
+from mcqrnn.torch import MCQRNNRegressor
 
 if __name__ == "__main__":
     # Set seed for reproducibility
     np.random.seed(42)
-    tf.random.set_seed(42)
+    torch.manual_seed(42)
 
     ### train data
     n = 1000
@@ -50,7 +50,7 @@ if __name__ == "__main__":
     for i in range(y_pred.shape[1]):
         plt.scatter(x_test_data, y_pred[:, i], color=colors[i], s=5)
 
-    plt.title("MCQRNN (Tensorflow)")
+    plt.title("MCQRNN (Torch)")
     plt.xlabel("x")
     plt.ylabel("y")
     plt.show()

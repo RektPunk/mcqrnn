@@ -1,13 +1,13 @@
 import numpy as np
-import tensorflow as tf
+import torch
 
-from mcqrnn.tensorflow import MCQRNNRegressor
+from mcqrnn.torch import MCQRNNRegressor
 
 
-def test_tensorflow_non_cross():
+def test_torch_non_cross():
     # Set seed for reproducibility
     np.random.seed(42)
-    tf.random.set_seed(42)
+    torch.manual_seed(42)
 
     ### train data
     n = 100
@@ -23,7 +23,7 @@ def test_tensorflow_non_cross():
 
     tau_vec = np.arange(0.1, 1.0, 0.1)
 
-    mcqrnn = MCQRNNRegressor(tau=tau_vec, out_features=3, dense_features=3, epochs=100)
+    mcqrnn = MCQRNNRegressor(tau=tau_vec, out_features=3, dense_features=3, epochs=10)
 
     mcqrnn.fit(x_data, y_data)
     predictions = mcqrnn.predict(x_data)

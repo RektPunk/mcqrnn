@@ -26,6 +26,7 @@ class MCQRNNModel(keras.Model):
         pos_initializer = keras.initializers.RandomUniform(minval=0.01, maxval=0.1)
         self.tau_embedding = Dense(
             out_features,
+            activation="sigmoid",
             use_bias=True,
             kernel_constraint=PositiveConstraint(),
             kernel_initializer=pos_initializer,  # type: ignore
@@ -68,7 +69,6 @@ class MCQRNNRegressor:
         epochs: int = 5000,
     ):
         self.tau = tf.constant(tau, dtype=tf.float32)
-        self.r = len(tau)
         self.out_features = out_features
         self.dense_features = dense_features
         self.lr = lr
@@ -93,11 +93,8 @@ class MCQRNNRegressor:
         def train_step(X_batch, y_batch, tau_batch):
             with tf.GradientTape() as tape:
                 y_pred = model_local((X_batch, tau_batch), training=True)
-                diff_y = y_batch - y_pred
-                loss = tf.maximum(
-                    tau_batch * diff_y,
-                    (tau_batch - 1.0) * diff_y,
-                )
+                diff = y_batch - y_pred
+                loss = tf.maximum(tau_batch * diff, (tau_batch - 1.0) * diff)
                 loss = tf.reduce_mean(loss)
                 total_loss = loss + sum(model_local.losses)
 
@@ -118,7 +115,6 @@ class MCQRNNRegressor:
         if self.model is None:
             raise ValueError("Please call .fit() first.")
 
-        return self.model(
-            (tf.cast(X, tf.float32), self.tau),
-            training=False,
-        ).numpy()
+        X_tensor = tf.cast(X, tf.float32)
+
+        return self.model((X_tensor, self.tau), training=False).numpy()
