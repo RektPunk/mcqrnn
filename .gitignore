@@ -7,3 +7,5 @@ __pycache__/
 .vscode/
 .pytest_cache/
 .python-version
+.venv/
+.ruff_cache/

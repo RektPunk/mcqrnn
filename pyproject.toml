@@ -1,13 +1,22 @@
 [project]
 name = "mcqrnn"
 version = "0.1.0"
-description = "Add your description here"
+description = "Monotone Composite Quantile Regression Neural Network (MCQRNN) implemented in both TensorFlow and PyTorch"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.12,<3.14"
 dependencies = [
+    "matplotlib>=3.11.0",
     "numpy>=2.3.5",
-    "pandas>=2.3.3",
-    "pre-commit>=4.5.0",
-    "pytest>=9.0.1",
-    "tensorflow>=2.20.0",
+    "tensorflow>=2.21.0",
+    "torch>=2.13.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore::DeprecationWarning:gast"
 ]

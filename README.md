@@ -1,23 +1,44 @@
-# mcqrnn-tf2
-Monotone composite quantile regression neural network (MCQRNN) with tensorflow 2.x.
+<div style="text-align: center;">
+  <img src="https://capsule-render.vercel.app/api?type=transparent&fontColor=0047AB&text=MCQRNN&height=120&fontSize=90">
+</div>
 
-### Getting Started
-1. Use the following command to download the project files from GitHub:
-```
+Monotone Composite Quantile Regression Neural Network (MCQRNN) implemented in both TensorFlow and PyTorch.
+
+## Getting Started
+
+### 1. Clone the repository
+
+```bash
 git clone https://github.com/RektPunk/mcqrnn.git
+cd mcqrnn
 ```
 
-2. Install requirements
+### 2. Install dependencies
 
-You have two options for installing the necessary Python packages:
-- Using pip (Standard)
-```
-pip install -r requirements.txt
-```
-- Using uv (Faster Alternative)
-```
+```bash
 uv sync
-```  
+```
 
-### Reference
-Cannon, Alex J. "Non-crossing nonlinear regression quantiles by monotone composite quantile regression neural network, with application to rainfall extremes." Stochastic environmental research and risk assessment 32.11 (2018): 3207-3225. [Link](https://link.springer.com/content/pdf/10.1007/s00477-018-1573-6.pdf)
+### 3. Run the examples
+
+```bash
+uv run run_tensorflow.py
+uv run run_torch.py
+```
+
+## Acknowledgments
+
+This is an **unofficial** implementation based on:
+
+```bibtex
+@article{cannon2018non,
+  title={Non-crossing nonlinear regression quantiles by monotone composite quantile regression neural network, with application to rainfall extremes},
+  author={Cannon, Alex J},
+  journal={Stochastic environmental research and risk assessment},
+  volume={32},
+  number={11},
+  pages={3207--3225},
+  year={2018},
+  publisher={Springer}
+}
+```

@@ -1,0 +1,24 @@
+name: Lint
+
+on:
+  push:
+    paths:
+      - "**.py"
+      - "**.ipynb"
+
+jobs:
+  run-linters:
+    name: Run linters
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+
+      - name: Run Ruff Check & Format
+        run: |
+          uvx ruff check .
+          uvx ruff format --check --diff .
