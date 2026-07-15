@@ -4,7 +4,7 @@ import tensorflow as tf
 from mcqrnn.tensorflow import MCQRNNRegressor
 
 
-def test_Mcqrnn():
+def test_mcqrnn():
     # Set seed for reproducibility
     np.random.seed(42)
     tf.random.set_seed(42)
