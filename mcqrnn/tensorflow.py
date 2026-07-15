@@ -45,13 +45,17 @@ class MCQRNNModel(keras.Model):
 
     def call(self, inputs: tuple[tf.Tensor, tf.Tensor]) -> tf.Tensor:
         x, tau = inputs
-        h_x = self.x_feature_extractor(x)
-        h_tau = self.tau_embedding(tau)
-        merged = h_x + h_tau
-        x_mono = self.monotone_hidden(merged)
-        outputs = self.output_dense(x_mono)
+        tau = tf.reshape(tau, (-1, 1))
 
-        return outputs
+        h_x = self.x_feature_extractor(x)  # (n,out)
+        h_tau = self.tau_embedding(tau)  # (r,out)
+        h_x = tf.expand_dims(h_x, axis=1)  # (n,1,out)
+        h_tau = tf.expand_dims(h_tau, axis=0)  # (1,r,out)
+        merged = h_x + h_tau  # (n,r,out)
+        hidden = self.monotone_hidden(merged)  # (n,r,dense)
+        outputs = self.output_dense(hidden)  # (n,r,1)
+
+        return tf.squeeze(outputs, axis=-1)  # (n,r)
 
 
 class MCQRNNRegressor:
@@ -72,20 +76,15 @@ class MCQRNNRegressor:
         self.model: MCQRNNModel | None = None
 
     def fit(self, X: NDArray[np.float64], y: NDArray[np.float64]) -> "MCQRNNRegressor":
-        n_samples = X.shape[0]
         self.model = MCQRNNModel(
-            out_features=self.out_features, dense_features=self.dense_features
+            out_features=self.out_features,
+            dense_features=self.dense_features,
         )
         optimizer = keras.optimizers.Adam(learning_rate=self.lr)
-
         X_tensor = tf.cast(X, tf.float32)
         y_tensor = tf.cast(y, tf.float32)
         if len(y_tensor.shape) == 1:
             y_tensor = tf.expand_dims(y_tensor, axis=-1)
-
-        X_tiled = tf.repeat(X_tensor, repeats=self.r, axis=0)
-        y_tiled = tf.repeat(y_tensor, repeats=self.r, axis=0)
-        tau_tiled = tf.tile(tf.expand_dims(self.tau, axis=-1), [n_samples, 1])
 
         assert self.model is not None
         model_local = self.model
@@ -107,8 +106,7 @@ class MCQRNNRegressor:
             return total_loss
 
         for epoch in range(self.epochs):
-            loss_val = train_step(X_tiled, y_tiled, tau_tiled)
-
+            loss_val = train_step(X_tensor, y_tensor, self.tau)
             if (epoch + 1) % 1000 == 0 or epoch == 0:
                 print(
                     f"Epoch [{epoch + 1}/{self.epochs}] - Loss: {loss_val.numpy():.4f}"
@@ -118,16 +116,9 @@ class MCQRNNRegressor:
 
     def predict(self, X: NDArray[np.float64]) -> NDArray[np.float32]:
         if self.model is None:
-            raise ValueError(
-                "The model has not been trained yet. Please call .fit() first."
-            )
+            raise ValueError("Please call .fit() first.")
 
-        n_samples = X.shape[0]
-        X_tensor = tf.cast(X, tf.float32)
-
-        X_tiled = tf.repeat(X_tensor, repeats=self.r, axis=0)
-        tau_tiled = tf.tile(tf.expand_dims(self.tau, axis=-1), [n_samples, 1])
-
-        predictions_flat = self.model((X_tiled, tau_tiled), training=False)
-        predictions = tf.reshape(predictions_flat, [n_samples, self.r])
-        return predictions.numpy()
+        return self.model(
+            (tf.cast(X, tf.float32), self.tau),
+            training=False,
+        ).numpy()
